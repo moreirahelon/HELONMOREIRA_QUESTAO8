@@ -13,14 +13,14 @@ public class Sprint_3Test {
 
 		_Biblioteca.BD_Livros.add(_Livro);
 		_Biblioteca.InserirNovoUsuario("UsuarioTeste");
-		
+
 		Usuario _UsuarioTest = null;
 		for(Usuario u : _Biblioteca.BD_Usuario){
 			if(u.GetNome() == "UsuarioTeste"){
 				_UsuarioTest = u;
 			}
 		}
-		
+
 		assertEquals("UsuarioTeste", _UsuarioTest.GetNome());
 		assertTrue(_UsuarioTest.GetUsuarioBloqueado());
 		assertEquals(0,_UsuarioTest.GetTempoBloqueado());

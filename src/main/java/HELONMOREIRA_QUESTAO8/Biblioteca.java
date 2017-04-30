@@ -64,11 +64,11 @@ public class Biblioteca {
 	}
 	
 	//---------------------------------------------------------//
-	boolean EmprestarLivro(String nome){
+	boolean EmprestarLivro(String nomeDoUsuario){
 		Usuario user = null;
 		
 		for(Usuario u : BD_Usuario){
-			if(u.GetNome() == nome){
+			if(u.GetNome() == nomeDoUsuario){
 				user = u;
 			}
 		}
@@ -79,11 +79,12 @@ public class Biblioteca {
 		
 		return user.GetUsuarioBloqueado();
 	}
-	Livro ProcurarLivro(String nome){
+	
+	Livro ProcurarLivro(String nomeDoLivro){
 		
-		System.out.printf("Procurando o livro %s! \n", nome);
+		System.out.printf("Procurando o livro %s! \n", nomeDoLivro);
 		for(Livro l : BD_Livros){
-			if(l.GetNome() == nome){
+			if(l.GetNome() == nomeDoLivro){
 				System.out.printf("Livro encontrado! \n");
 				return l;
 			}
@@ -92,18 +93,30 @@ public class Biblioteca {
 		return null;
 	}
 	
-	void RegistrarEmprestimo(String nomeLivro, String nomeUsuario,int tempo){
+	public String SituacaoDoLivro(String nomeDoLivro){
+		Livro book;
+		
+		book = ProcurarLivro(nomeDoLivro);
+		
+		if (book==null){
+			return "Livro nao encontrado!";
+		}
+		
+		return book.GetSituacaoDoLivro();
+	}
+	
+	void RegistrarEmprestimo(String nomeDoLivro, String nomeDoUsuario,int tempo){
 		Livro book;
 		Usuario user = null;
 		
-		book = ProcurarLivro(nomeLivro);
+		book = ProcurarLivro(nomeDoLivro);
 		
 		if (book == null){
 			return;
 		}
 		
 		for(Usuario u : BD_Usuario){
-			if(u.GetNome() == nomeUsuario){
+			if(u.GetNome() == nomeDoUsuario){
 				user = u;
 			}
 		}
@@ -112,7 +125,7 @@ public class Biblioteca {
 			return ;
 		}
 		
-		Sistema system = new Sistema(nomeLivro,nomeUsuario,tempo);
+		Sistema system = new Sistema(nomeDoLivro,nomeDoUsuario,tempo);
 		
 		BD_Livros.remove(book);
 		book.SetSituacaoDoLivro("Retirado");
@@ -120,18 +133,18 @@ public class Biblioteca {
 		HistoricoDeEmprestimos.add(system);
 	}
 	
-	void RegistrarDevolucao(String nomeLivro, String nomeUsuario){
+	void RegistrarDevolucao(String nomeDoLivro, String nomeDoUsuario){
 		Livro book;
 		Usuario user = null;
 		
-		book = ProcurarLivro(nomeLivro);
+		book = ProcurarLivro(nomeDoLivro);
 		
 		if (book == null){
 			return;
 		}
 		
 		for(Usuario u : BD_Usuario){
-			if(u.GetNome() == nomeUsuario){
+			if(u.GetNome() == nomeDoUsuario){
 				user = u;
 			}
 		}
@@ -140,7 +153,7 @@ public class Biblioteca {
 			return ;
 		}
 		
-		Sistema system = new Sistema(nomeLivro, nomeUsuario, 0);
+		Sistema system = new Sistema(nomeDoLivro, nomeDoUsuario, 0);
 		
 		BD_Livros.remove(book);
 		book.SetSituacaoDoLivro("Disponível");

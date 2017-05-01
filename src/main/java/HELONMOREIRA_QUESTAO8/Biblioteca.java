@@ -98,7 +98,7 @@ public class Biblioteca {
 		
 		book = ProcurarLivro(nomeDoLivro);
 		
-		if (book==null){
+		if (book == null){
 			return "Livro nao encontrado!";
 		}
 		
@@ -160,5 +160,63 @@ public class Biblioteca {
 		BD_Livros.add(book);
 		
 		HistoricoDeEmprestimos.remove(system);
+	}
+	//------------------------------------------------------------
+	
+	public String LivrosDoUsuario(String nomeDoUsuario, String nomeDoLivro){
+		Usuario user = null;
+		
+		for(Usuario u : BD_Usuario){
+			if(u.GetNome() == nomeDoUsuario){
+				user = u;
+			}
+		}
+		
+		if(user == null){
+			return null;
+		}
+		
+		for(Sistema emprestimo : HistoricoDeEmprestimos){
+			if(emprestimo.GetUsuario() == nomeDoUsuario || emprestimo.GetLivro() == nomeDoLivro){
+				if(emprestimo.GetPrazo() >= 0){
+					
+					return "No prazo";
+				
+				}else{
+
+					return "Prazo vencido!";
+				}
+			}
+		}
+		return null;
+	}
+	
+	public String SituacaoDoUsuario(String nomeDoUsuario, String nomeDoLivro){
+Usuario user = null;
+		
+		for(Usuario u : BD_Usuario){
+			if(u.GetNome() == nomeDoUsuario){
+				user = u;
+			}
+		}
+		
+		if(user == null){
+			return null;
+		}
+		
+		for(Sistema emprestimo : HistoricoDeEmprestimos){
+			if(emprestimo.GetUsuario() == nomeDoUsuario || emprestimo.GetLivro() == nomeDoLivro){
+				if(emprestimo.GetPrazo() > 0){
+					
+					return "Liberado";
+				
+				}else if(emprestimo.GetPrazo() == 0){
+
+					return "Bloqueado por atraso";
+				}
+				else return "Bloqueado por cobrança";
+			}
+		}
+		return null;
 	}
 }

@@ -43,8 +43,7 @@ public class Sprint_4Test {
 	//	assertEquals("Prazo vencido!",_Biblioteca.LivrosDoUsuario("UsuarioTeste", _HistoricoDeEmprestimo.get(1).GetLivro()));
 		
 		assertEquals("LivroTeste3",  _HistoricoDeEmprestimo.get(2).GetLivro());
-		System.out.printf("\n %s \n", _Biblioteca.SituacaoDoUsuario("UsuarioTeste", _HistoricoDeEmprestimo.get(3).GetLivro()));
-		System.out.printf("\n %d \n", _HistoricoDeEmprestimo.get(3).GetPrazo());
+	//	System.out.printf("\n %s \n", _Biblioteca.SituacaoDoUsuario("UsuarioTeste", _HistoricoDeEmprestimo.get(2).GetLivro()));
 	//	assertEquals("Bloqueado por atraso", _Biblioteca.SituacaoDoUsuario("UsuarioTeste", _HistoricoDeEmprestimo.get(2).GetLivro()));
 		
 		assertEquals("LivroTeste4",  _HistoricoDeEmprestimo.get(3).GetLivro());
